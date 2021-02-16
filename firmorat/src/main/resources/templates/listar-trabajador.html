@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br>
+<div th:if="${success != null}" th:text="${success}"
+		class="alert alert-success" role="alert"></div>
+<div th:if="${error != null}" th:text="${error}"
+		class="alert alert-danger" role="alert"></div>
+<div class="container py-5" style="width: 950px;"> 
+<a th:href="@{/mantenimiento-trabajadores/crear}">Añadir</a>
+  <table id="tbPackageList" class="table table-bordered table-hover" style="width:100%">
+       <thead class="claro-bg-primary">
+           <tr>
+               <th style="text-align: center; width: inherit;">DNI</th>
+               <th style="text-align: center; width: inherit;">Apellidos y Nombres</th>
+               <th style="text-align: center; width: inherit;">Correo</th>
+               <th style="text-align: center; width: inherit;">Rol</th>
+               <th style="text-align: center; width: inherit;">-</th>
+               <th style="text-align: center; width: inherit;">-</th>               
+           </tr>           
+       </thead>
+       <tbody id="tbPackageBodyList">
+       <tr th:each="lista : ${listaTrabajadores}">
+           		<td th:text="${lista.dni}"></td>
+           		<td th:text="${lista.apellidos}+' '+${lista.nombres}"></td>
+           		<td th:text="${lista.email}"></td>
+           		<td th:text="${lista.rol.descripcion}"></td>  
+           		<td style="text-align: center; width: inherit;"><a th:href="@{/mantenimiento-trabajadores/editar/}+${lista.dni}">Editar</a></td>
+           		<td style="text-align: center; width: inherit;"><a th:href="@{/mantenimiento-trabajadores/eliminar/}+${lista.dni}">Eliminar</a></td>           		         
+           </tr>
+       </tbody>
+   </table>
+</div>
+</body>
+</html>
