@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div th:if="${success != null}" th:text="${success}"
+		class="alert alert-success" role="alert"></div>
+	<div th:if="${error != null}" th:text="${error}"
+		class="alert alert-danger" role="alert"></div>
+
+	<div class="container">
+		<br>
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Cargar Documento</div>
+				<div class="panel-body">
+					<form th:object="${documento}" th:action="@{/doc/cargar}" method="post"
+						enctype="multipart/form-data">
+
+						<div style="text-align: center;">
+							<span class="label label-primary">Nombre</span> <input style="width:200px;"
+								type="text" th:field="*{nombre}" maxlength="45"
+								th:errorclass="alert-danger">
+								<br>
+								<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+						<br>
+						<div style="text-align: center;">
+							<span class="label label-primary">Descripcion</span> <input maxlength="45" style="width:300px;"
+								type="text" th:field="*{descripcion}" th:errorclass="alert-danger">
+								<br>
+								<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('descripcion')}"
+								th:errors="*{descripcion}"></small>
+						</div>						
+						<br>
+
+						<div style="margin-left: 400px" class="custom-file">
+							<input type="file" class="custom-file-input" id="file"
+								name="file" accept="application/pdf" />
+						</div>
+
+						<div style="text-align: center;" id="errorfile"></div>
+						<br>
+						<div style="text-align: center;">
+							<input type="submit" value="Cargar">
+						</div>
+					</form>
+					<br>
+					<div>
+						<table id="tbPackageList" class="table table-bordered table-hover"
+							style="width: 100%">
+							<thead class="claro-bg-primary">
+								<tr>
+									<th style="text-align: center; width: inherit;">Nombre</th>
+									<th style="text-align: center; width: inherit;">Descripcion</th>
+									<th style="text-align: center; width: inherit;">Fecha
+										Carga</th>
+								</tr>
+							</thead>
+							<tbody id="tbPackageBodyList">
+								<tr th:each="lista : ${listadoDocumentos}">
+									<td th:text="${lista.nombre}"></td>
+									<td th:text="${lista.descripcion}"></td>
+									<td style="text-align: center; width: inherit;" th:text="${#dates.format(lista.fechaCarga,'dd-MM-yyyy')}"></td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<nav aria-label="Page navigation example" style="text-align: center;">
+  <ul  class="pagination">
+    
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>    
+    
+  </ul>
+</nav>
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:fragment="javascript">
+			  	$('.custom-file-input').on('change', function(event) {
+			  	    var inputFile = event.currentTarget;
+			  	    var file = $(this).val();
+			        var ext = file.substring(file.lastIndexOf("."));
+			        if(ext != ".pdf") 
+			  	    {
+			        	$(inputFile).parent().find('.custom-file-label').html('');
+	    	        	$('#errorfile').html('<p><font size="2" color="#ff0000">Solo se puede adjuntar archivo PDF</font></p>');
+			  	    }
+			        else
+			        	{
+			        	$('#errorfile').html('');
+			  	        $(inputFile).parent().find('.custom-file-label').html(inputFile.files[0].name);
+			        	}
+			  	  });
+</script>
+
+</body>
+
+</html>

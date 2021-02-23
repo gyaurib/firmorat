@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br>
+<div class="container py-4" style="width: 450px;">
+
+				<form th:object="${trabajador}" th:action="@{/mantenimiento-trabajadores/grabar}" method="post">
+				
+				<h3 style="text-align: center; width: inherit;" class="card-title" th:text="${titulo}"></h3>				
+				<br>					
+				
+					<div class="form-group">
+					<label>Número Documento</label>
+						<input type="text"  th:field="*{dni}" name="dni" class="form-control" />						
+					</div>
+					
+					<div class="form-group">
+					<label>Apellidos</label>
+					    <input type="text"  th:field="*{apellidos}" name="ape" class="form-control" />					     
+					</div>
+					
+					<div class="form-group">
+					<label>Nombres</label>
+					    <input type="text"  th:field="*{nombres}" name="nom" class="form-control"/>					     
+					</div>					
+					
+					<div class="form-group">
+					<label>Correo</label>
+					    <input type="text" th:field="*{email}" name="email" class="form-control"/>					    
+					</div>
+					
+					<div class="form-group">
+					<label>Dirección</label>
+					    <input type="text" th:field="*{direccion}" name="direccion" class="form-control"/>					    
+					</div>
+					
+					<div class="form-group" >
+					<label>Fecha Nacimiento</label>
+					    <input type="date" th:field="*{fechaNacimiento}" name="fechaNacimiento" class="form-control col-md-2"/>					    
+					</div>
+					<br>
+					<br>	
+					<div class="form-group">					
+					<label>Rol</label>
+                      <select th:field="*{rol}" name= "rol" id="rol" class="form-control selectpicker">
+					  <option th:selected value=0>Selecciona Rol</option>
+                      <option th:each="lista:${listadoRol}"
+                              th:value="${lista.codigo}"
+                              th:text="${lista.descripcion}"/>
+                    </select> 					
+                  </div>					
+					
+					<br>							
+					<div style="text-align: center; width: inherit;" class="form-group">
+					<input type="submit" class="btn btn-primary btn-sm" value="Grabar">
+					<a class="btn btn-danger btn-sm" th:href="@{/mantenimiento-trabajadores/listar} ">Regresar</a>
+					
+					<input type="hidden" id="valid" name="valid" value=1>                    
+                  </div>			
+
+				</form>
+	
+			</div>
+			
+</body>
+</html>
