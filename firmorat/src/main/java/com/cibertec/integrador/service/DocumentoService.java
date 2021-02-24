@@ -25,4 +25,15 @@ public class DocumentoService implements IDocumento {
 		return repositorio.save(d);
 	}
 
+	@Override
+	public void actualizarArchivoDoc(String ruta, int id) {
+		repositorio.actualizarArchivoDoc(ruta, id);
+		
+	}
+
+	@Override
+	public List<Documento> listarDocumento() {
+		return (List<Documento>)repositorio.findAll();
+	}
+
 }

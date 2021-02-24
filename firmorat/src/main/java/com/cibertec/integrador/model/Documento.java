@@ -32,7 +32,7 @@ public class Documento {
 	private String descripcion;
 	
 	@Column(name="doc_cargado")
-	private String documentoCargado;
+	private String documentoCargado;	
 	
 	@Column(name="doc_firmado")
 	private String documentoFirmado;
@@ -51,24 +51,25 @@ public class Documento {
 	
 	@PrePersist
 	public void prePersist() throws Exception {		
-		fechaCarga = new Date();	
+		fechaCarga = new Date();
+		
     }
 	
 	public Documento() {	
 	}
+
 
 	public Documento(int id, @NotEmpty String nombre, @NotEmpty String descripcion, String documentoCargado,
 			String documentoFirmado, Date fechaCarga, Date fechaFirma, Trabajador trabajador) {		
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.documentoCargado = documentoCargado;
+		this.documentoCargado = documentoCargado;		
 		this.documentoFirmado = documentoFirmado;
 		this.fechaCarga = fechaCarga;
 		this.fechaFirma = fechaFirma;
 		this.trabajador = trabajador;
 	}
-	
 
 	public int getId() {
 		return id;
@@ -132,12 +133,7 @@ public class Documento {
 
 	public void setTrabajador(Trabajador trabajador) {
 		this.trabajador = trabajador;
-	}
-	
-	
-	
-	
-	
+	}	
 	
 }
 	

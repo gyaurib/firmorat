@@ -41,6 +41,11 @@ public class TrabajadorService implements ITrabajador {
 		repositorio.deleteById(dni);
 		
 	}
+
+	@Override
+	public List<Trabajador> listarTrabajadorRol(int rol) {
+		return repositorio.listarTrabajadorRol(rol);
+	}
 	
 	
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div th:if="${success != null}" th:text="${success}"
+		class="alert alert-success" role="alert"></div>
+	<div th:if="${error != null}" th:text="${error}"
+		class="alert alert-danger" role="alert"></div>
+
+	<div class="container">
+		<br>
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Firmar Documento</div>
+				<div class="panel-body">
+					<div style="text-align: center; width: inherit;">
+						<label>Nombre</label>
+						&nbsp;
+						<input style="width:300px" type="text">
+						&nbsp;
+						<button class="btn btn-primary btn-sm">Buscar</button>
+					</div>
+					<br>
+					<div>
+						<table id="tbPackageList" class="table table-bordered table-hover"
+							style="width: 100%">
+							<thead class="claro-bg-primary">
+								<tr>
+									<th style="text-align: center; width: inherit;">Nombre</th>
+									<th style="text-align: center; width: inherit;">Descripcion</th>
+									<th style="text-align: center; width: inherit;">Trabajador</th>
+									<th style="text-align: center; width: inherit;">Fecha Carga</th>																		
+								</tr>
+							</thead>
+							<tbody id="tbPackageBodyList">
+								<tr th:each="lista : ${listadoDocumentos}">
+									<td th:text="${lista.nombre}"></td>
+									<td th:text="${lista.descripcion}"></td>
+									<td th:text="${lista.trabajador.nombres}+' '+${lista.trabajador.apellidos}"></td>
+									<td style="text-align: center; width: inherit;" th:text="${#dates.format(lista.fechaCarga,'dd-MM-yyyy')}"></td>
+									<td style="text-align: center; width: inherit;"><a class="btn btn-primary btn-sm" th:href="@{/doc/archivo/}+${lista.documentoCargado}">Ver </a></td>
+									<td style="text-align: center; width: inherit;"><a class="btn btn-success btn-sm">Firmar</a></td>
+									<!-- ${#strings.substring(lista.documentoCargado,3,#strings.length(lista.documentoCargado))} -->
+								</tr>
+							</tbody>
+						</table>
+					
+						<nav aria-label="Page navigation example" style="text-align: center;">
+  <ul  class="pagination">    
+    <li class="page-item"><a class="page-link" href="">1</a></li>
+     
+    
+  </ul>
+</nav>
+ 
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>	
+
+</body>
+
+</html>
