@@ -26,14 +26,35 @@ public class DocumentoService implements IDocumento {
 	}
 
 	@Override
-	public void actualizarArchivoDoc(String ruta, int id) {
-		repositorio.actualizarArchivoDoc(ruta, id);
+	public void actualizarDocumentoCargado(String ruta, int id) {
+		repositorio.actualizarDocumentoCargado(ruta, id);
 		
 	}
 
 	@Override
 	public List<Documento> listarDocumento() {
 		return (List<Documento>)repositorio.findAll();
+	}
+
+	@Override
+	public List<Documento> listarDocumentoFirmante(String dni) {
+		return (List<Documento>) repositorio.listarDocumentoFirmante(dni);
+	}
+
+	@Override
+	public List<Documento> buscarDocumentoNombre(String nombre,String dni) {
+		return (List<Documento>) repositorio.buscarDocumentoNombre(nombre,dni);
+	}
+
+	@Override
+	public void actualizarDocumentoFirmado(String ruta, int id) {
+		repositorio.actualizarDocumentoFirmado(ruta, id);
+		
+	}
+
+	@Override
+	public Documento buscarDocumento(int id) {
+		return repositorio.findById(id).orElse(null);
 	}
 
 }

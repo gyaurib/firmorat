@@ -46,6 +46,11 @@ public class TrabajadorService implements ITrabajador {
 	public List<Trabajador> listarTrabajadorRol(int rol) {
 		return repositorio.listarTrabajadorRol(rol);
 	}
+
+	@Override
+	public Trabajador buscarTrabajadorUsuario(String username) {
+		return repositorio.buscarTrabajadorUsuario(username);
+	}
 	
 	
 }

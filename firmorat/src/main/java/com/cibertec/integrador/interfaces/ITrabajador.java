@@ -11,7 +11,8 @@ public interface ITrabajador {
 	public List<Trabajador> listarTrabajador();
 	public void eliminarTrabajador (String dni);
 	public List<Trabajador> listarTrabajadorRol (int rol);
-	public int actualizarTrabajador(Trabajador t); 
+	public int actualizarTrabajador(Trabajador t);
+	public Trabajador buscarTrabajadorUsuario(String username);
 
 
 }

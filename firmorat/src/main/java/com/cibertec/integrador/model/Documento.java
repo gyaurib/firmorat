@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,23 +32,28 @@ public class Documento {
 	@Column(name="descripcion")
 	private String descripcion;
 	
-	@Column(name="doc_cargado")
-	private String documentoCargado;	
+	@ManyToOne
+	@JoinColumn(name="dni_carga",referencedColumnName="dni_trabajador" ,nullable=false)
+	private Trabajador trabajadorCarga;
 	
-	@Column(name="doc_firmado")
-	private String documentoFirmado;
+	@Column(name="doc_cargado")
+	private String documentoCargado;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="fecha_carga")
 	private Date fechaCarga;
 	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="dni_firma",referencedColumnName="dni_trabajador" ,nullable=false)
+	private Trabajador trabajadorFirma;		
+	
+	@Column(name="doc_firmado")
+	private String documentoFirmado;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="fecha_firma")
-	private Date fechaFirma;
-	
-	@ManyToOne
-	@JoinColumn(name="dni_trabajador", nullable=false)
-	private Trabajador trabajador;
+	private Date fechaFirma;	
 	
 	@PrePersist
 	public void prePersist() throws Exception {		
@@ -58,17 +64,18 @@ public class Documento {
 	public Documento() {	
 	}
 
-
 	public Documento(int id, @NotEmpty String nombre, @NotEmpty String descripcion, String documentoCargado,
-			String documentoFirmado, Date fechaCarga, Date fechaFirma, Trabajador trabajador) {		
+			Date fechaCarga, Trabajador trabajadorCarga, String documentoFirmado, Date fechaFirma,
+			Trabajador trabajadorFirma) {		
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.documentoCargado = documentoCargado;		
-		this.documentoFirmado = documentoFirmado;
+		this.documentoCargado = documentoCargado;
 		this.fechaCarga = fechaCarga;
+		this.trabajadorCarga = trabajadorCarga;
+		this.documentoFirmado = documentoFirmado;
 		this.fechaFirma = fechaFirma;
-		this.trabajador = trabajador;
+		this.trabajadorFirma = trabajadorFirma;
 	}
 
 	public int getId() {
@@ -103,20 +110,28 @@ public class Documento {
 		this.documentoCargado = documentoCargado;
 	}
 
-	public String getDocumentoFirmado() {
-		return documentoFirmado;
-	}
-
-	public void setDocumentoFirmado(String documentoFirmado) {
-		this.documentoFirmado = documentoFirmado;
-	}
-
 	public Date getFechaCarga() {
 		return fechaCarga;
 	}
 
 	public void setFechaCarga(Date fechaCarga) {
 		this.fechaCarga = fechaCarga;
+	}
+
+	public Trabajador getTrabajadorCarga() {
+		return trabajadorCarga;
+	}
+
+	public void setTrabajadorCarga(Trabajador trabajadorCarga) {
+		this.trabajadorCarga = trabajadorCarga;
+	}
+
+	public String getDocumentoFirmado() {
+		return documentoFirmado;
+	}
+
+	public void setDocumentoFirmado(String documentoFirmado) {
+		this.documentoFirmado = documentoFirmado;
 	}
 
 	public Date getFechaFirma() {
@@ -127,14 +142,17 @@ public class Documento {
 		this.fechaFirma = fechaFirma;
 	}
 
-	public Trabajador getTrabajador() {
-		return trabajador;
+	public Trabajador getTrabajadorFirma() {
+		return trabajadorFirma;
 	}
 
-	public void setTrabajador(Trabajador trabajador) {
-		this.trabajador = trabajador;
-	}	
+	public void setTrabajadorFirma(Trabajador trabajadorFirma) {
+		this.trabajadorFirma = trabajadorFirma;
+	}
 	
-}
+	
+	
 	
 
+
+}

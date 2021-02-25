@@ -17,7 +17,7 @@ import com.cibertec.integrador.model.Trabajador;
 import com.cibertec.integrador.service.RolService;
 import com.cibertec.integrador.service.TrabajadorService;
 
-@RequestMapping("/mantenimiento-trabajadores")
+@RequestMapping("/trabajador")
 @Controller
 public class TrabajadorController {
 	

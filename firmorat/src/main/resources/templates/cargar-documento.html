@@ -24,13 +24,15 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">Cargar Documento</div>
 				<div class="panel-body">
-					<form th:object="${documento}" th:action="@{/doc/cargar}" method="post"
+				
+				<div style="width:500px;margin:0 auto;">
+				
+					<form th:object="${documento}" th:action="@{/documento/cargar}" method="post"
 						enctype="multipart/form-data">
 
 						<div style="text-align: center;">
 							<span style="font-size: 13px;" class="label label-primary">Nombre</span> <input style="width:200px;font-size: 13px;"
-								type="text" th:field="*{nombre}" maxlength="45"
-								th:errorclass="alert-danger">
+								type="text" th:field="*{nombre}" maxlength="45" th:errorclass="alert-danger">
 								<br>
 								<small class="form-text text-danger"
 								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
@@ -48,17 +50,20 @@
 							<div style="text-align: center;">
 							<span style="font-size: 13px;" class="label label-primary">Firmante</span>
 							 
-							<select class="form-select" id="combo">		
-							<option>Seleccione firmante</option>					
+							<select class="form-select" id="combo" th:field="*{trabajadorFirma}" th:errorclass="alert-danger">		
+							<option th:selected value="">Seleccione firmante</option>					
 							<option th:each="lista:${listadoFirmante}"
 									th:value="${lista.dni}"
 									th:text="${lista.nombres}+' '+${lista.apellidos}"									
 									/>							
-							</select>							
+							</select>		
+							<br>
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('trabajadorFirma')}" th:errors="*{trabajadorFirma}"></small>					
 						</div>				
 						<br>
 
-						<div style="margin-left: 400px" class="custom-file">
+						<div style="margin-left: 100px" class="custom-file">
 							<input type="file" class="custom-file-input" id="file"
 								name="file" accept="application/pdf" />
 						</div>
@@ -66,9 +71,11 @@
 						<div style="text-align: center;" id="errorfile"></div>
 						<br>
 						<div style="text-align: center;">
-							<input class="btn btn-primary" type="submit" value="Cargar">
+							<input class="btn btn-primary btn-sm" type="submit" value="Cargar">
 						</div>
 					</form>
+					
+					</div>
 					<br>
 					<div>
 						<table id="tbPackageList" class="table table-bordered table-hover"
@@ -76,16 +83,17 @@
 							<thead class="claro-bg-primary">
 								<tr>
 									<th style="text-align: center; width: inherit;">Nombre</th>
-									<th style="text-align: center; width: inherit;">Descripcion</th>
-									<th style="text-align: center; width: inherit;">Fecha
-										Carga</th>
+									<th style="text-align: center; width: inherit;">Descripcion</th>									
+									<th style="text-align: center; width: inherit;">Firmante</th>
+									<th style="text-align: center; width: inherit;">Fecha Carga</th>
 								</tr>
 							</thead>
 							<tbody id="tbPackageBodyList">
 								<tr th:each="lista : ${listadoDocumentos}">
 									<td th:text="${lista.nombre}"></td>
 									<td th:text="${lista.descripcion}"></td>
-									<td style="text-align: center; width: inherit;" th:text="${#dates.format(lista.fechaCarga,'dd-MM-yyyy')}"></td>
+									<td style="text-align: center; width: inherit;" th:text="${lista.trabajadorFirma.nombres}+' '+${lista.trabajadorFirma.apellidos}"></td>								
+									<td style="text-align: center; width: inherit;" th:text="${#dates.format(lista.fechaCarga,'dd-MM-yyyy')}"></td>									
 								</tr>
 							</tbody>
 						</table>

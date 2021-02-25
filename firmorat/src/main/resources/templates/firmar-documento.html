@@ -17,6 +17,8 @@
 		class="alert alert-success" role="alert"></div>
 	<div th:if="${error != null}" th:text="${error}"
 		class="alert alert-danger" role="alert"></div>
+	<div th:if="${info != null}" th:text="${info}" class="alert alert-info"
+		role="alert"></div>
 
 	<div class="container">
 		<br>
@@ -25,11 +27,13 @@
 				<div class="panel-heading">Firmar Documento</div>
 				<div class="panel-body">
 					<div style="text-align: center; width: inherit;">
+					<form th:action="@{/documento/buscar}" action="post">
 						<label>Nombre</label>
 						&nbsp;
-						<input style="width:300px" type="text">
+						<input style="width:300px" type="text" id="nombre" name="nombre">
 						&nbsp;
-						<button class="btn btn-primary btn-sm">Buscar</button>
+						<button type="submit" class="btn btn-primary btn-sm">Buscar</button>						
+						</form>
 					</div>
 					<br>
 					<div>
@@ -39,18 +43,19 @@
 								<tr>
 									<th style="text-align: center; width: inherit;">Nombre</th>
 									<th style="text-align: center; width: inherit;">Descripcion</th>
-									<th style="text-align: center; width: inherit;">Trabajador</th>
+									<th style="text-align: center; width: inherit;">Gestor</th>
 									<th style="text-align: center; width: inherit;">Fecha Carga</th>																		
 								</tr>
 							</thead>
 							<tbody id="tbPackageBodyList">
 								<tr th:each="lista : ${listadoDocumentos}">
+									<td style="display:none;" th:text="${lista.id}">
 									<td th:text="${lista.nombre}"></td>
 									<td th:text="${lista.descripcion}"></td>
-									<td th:text="${lista.trabajador.nombres}+' '+${lista.trabajador.apellidos}"></td>
+									<td th:text="${lista.trabajadorCarga.nombres}+' '+${lista.trabajadorCarga.apellidos}"></td>
 									<td style="text-align: center; width: inherit;" th:text="${#dates.format(lista.fechaCarga,'dd-MM-yyyy')}"></td>
-									<td style="text-align: center; width: inherit;"><a class="btn btn-primary btn-sm" th:href="@{/doc/archivo/}+${lista.documentoCargado}">Ver </a></td>
-									<td style="text-align: center; width: inherit;"><a class="btn btn-success btn-sm">Firmar</a></td>
+									<td style="text-align: center; width: inherit;"><a class="btn btn-primary btn-sm" th:href="@{/documento/archivo/}+${lista.documentoCargado}">Ver </a></td>
+									<td style="text-align: center; width: inherit;"><a class="btn btn-success btn-sm" th:href="@{/documento/generar/}+${lista.id}">Firmar</a></td>
 									<!-- ${#strings.substring(lista.documentoCargado,3,#strings.length(lista.documentoCargado))} -->
 								</tr>
 							</tbody>
