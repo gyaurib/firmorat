@@ -1,18 +1,20 @@
 # firmorat
 Proyecto Integrador
 
+Módulos de Carga y Firma de Documentos
+
 En el archivo application.properties (src/main/resources) se puede modificar el puerto que se desea usar, así como configurar el nombre de la bd
 y las credenciales de acceso a MySQL
 
 Se crearon los usuarios gyauri y smendozal con permisos de Gestor y Firmante respectivamente.
 
-GESTOR
-gyaurib
-admin99
+usuario:gyaurib
+clave:admin99
+rol:GESTOR
 
-FIRMANTE
-smendozal
-test99
+usuario:smendozal
+clave:test99
+rol:FIRMANTE
 
 La ruta para acceder es la siguiente:
 http://localhost:8080/login 
@@ -213,36 +215,36 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
 -- DATOS PARAMETRICOS
--- -----------------------------------------------------
-  
+-- -----------------------------------------------------   
+
 INSERT INTO CLIENTE (RUC,RAZON_SOCIAL,DIRECCION_FISCAL)
-values ('20545739284','CIBERTEC PERU S.A.C.','Av. Uruguay Nro. 514 Cercado de Lima');
+VALUES ('20545739284','CIBERTEC PERU S.A.C.','AV. URUGUAY NRO. 514 CERCADO DE LIMA');
 
-insert into certificado_digital (fecha_registro)
-values (curdate());
+INSERT INTO CERTIFICADO_DIGITAL (FECHA_REGISTRO)
+VALUES (CURDATE());
 
-insert into rol (descripcion)
-values ("ROLE_FIRMANTE");
-insert into rol (descripcion)
-values ("ROLE_GESTOR");
+INSERT INTO ROL (DESCRIPCION)
+VALUES ("ROLE_FIRMANTE");
+INSERT INTO ROL (DESCRIPCION)
+VALUES ("ROLE_GESTOR");
 
 
-INSERT INTO TRABAJADOR (dni_trabajador,nombres,apellidos, correo,direccion,id_rol,cod_certificado,id_cliente)
-values ('73114622','Gustavo','Yauri Barrantes','tripcr6@gmail.com','Jirón Francisco Bolognesi 875',2,1,1);
+INSERT INTO TRABAJADOR (DNI_TRABAJADOR,NOMBRES,APELLIDOS, CORREO,DIRECCION,ID_ROL,COD_CERTIFICADO,ID_CLIENTE)
+VALUES ('73114622','GUSTAVO','YAURI BARRANTES','TRIPCR6@GMAIL.COM','JIRÓN FRANCISCO BOLOGNESI 875',2,1,1);
 
-INSERT INTO TRABAJADOR (dni_trabajador,nombres,apellidos, correo,direccion,id_rol,cod_certificado,id_cliente)
-values ('65847410','Susana','Mendoza Lama','ridddg_c@gmail.com','Avenida La Molina 5623',1,1,1);
+INSERT INTO TRABAJADOR (DNI_TRABAJADOR,NOMBRES,APELLIDOS, CORREO,DIRECCION,ID_ROL,COD_CERTIFICADO,ID_CLIENTE)
+VALUES ('65847410','SUSANA','MENDOZA LAMA','RIDDDG_C@GMAIL.COM','AVENIDA LA MOLINA 5623',1,1,1);
 
-insert into usuario(username,password) 
-values ('gyaurib','$2a$10$Pd3VutNykkTvbG8PZ2XRd.kUMQ7ozVoey43iZ7K61/oxSxgbnT0xa');
+INSERT INTO USUARIO(USERNAME,PASSWORD) 
+VALUES ('GYAURIB','$2A$10$PD3VUTNYKKTVBG8PZ2XRD.KUMQ7OZVOEY43IZ7K61/OXSXGBNT0XA');
 
-insert into usuario(username,password) 
-values ('smendozal','$2a$10$ryL8PsAUt5XLPr4MQafeBODF5bUcmlrruRSaAizCWVMi.3WNz2crm');
+INSERT INTO USUARIO(USERNAME,PASSWORD) 
+VALUES ('SMENDOZAL','$2A$10$RYL8PSAUT5XLPR4MQAFEBODF5BUCMLRRURSAAIZCWVMI.3WNZ2CRM');
 
-insert into usuario_trabajador (id_usuario,dni_trabajador)
-values (1,'73114622');
+INSERT INTO USUARIO_TRABAJADOR (ID_USUARIO,DNI_TRABAJADOR)
+VALUES (1,'73114622');
 
-insert into usuario_trabajador (id_usuario,dni_trabajador)
-values (2,'65847410');
+INSERT INTO USUARIO_TRABAJADOR (ID_USUARIO,DNI_TRABAJADOR)
+VALUES (2,'65847410');
 
 */
