@@ -12,36 +12,52 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" 
-            data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">FIRMORAT</a>
-    </div>
+	<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">FIRMORAT</a>
+			</div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">      
-        <li ><a th:href="@{/documento/cargar}"> <span class="sr-only">(current)</span>Cargar Documento</a></li>
-        <li class="active"><a th:href="@{/documento/firmar}">Firmar Documento</a></li>
-        
-      
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a th:text="${nombreCompleto}">""</a></li>        
-      </ul>
-      
-      
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li ><a th:href="@{/documento/cargar}"> <span
+							class="sr-only">(current)</span>Cargar Documento
+					</a></li>
+					<li class="active" sec:authorize="hasRole('ROLE_FIRMANTE')"><a
+						th:href="@{/documento/firmar}">Firmar Documento</a></li>
+
+
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:text="${nombreCompleto}">""</a></li>
+					<li>
+						<form id="logoutForm" th:action="@{/logout}" method="post">
+						<input type="hidden"/><br>
+							<button class="btn-primary"
+								onclick="document.getElementById('logoutForm').submit();"
+								type="submit">Cerrar Sesión</button>
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}" />
+								<br>
+								<input type="hidden"/>
+						</form>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
 
 
 	<div th:if="${success != null}" th:text="${success}"

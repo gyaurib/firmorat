@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -38,12 +39,26 @@ public class Trabajador {
 		
 	@ManyToOne
 	@JoinColumn(name="id_rol", nullable=false)
-	private Rol rol;	
+	private Rol rol;
+	
+	@Column(name="cod_certificado")
+	private int certificadoDigital;
+	
+	@Column(name="id_cliente")
+	private int idCliente;
+	
+	@PrePersist
+	public void prePersist() throws Exception {		
+		certificadoDigital =1;
+		idCliente = 1;
+		
+    }
 
 	public Trabajador() {		
 	}
+	
 	public Trabajador(String dni, @NotEmpty String nombres, @NotEmpty String apellidos, Date fechaNacimiento,
-			String direccion, String email, Rol rol) {		
+			String direccion, String email, Rol rol, int certificadoDigital, int idCliente) {	
 		this.dni = dni;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
@@ -51,7 +66,10 @@ public class Trabajador {
 		this.direccion = direccion;
 		this.email = email;
 		this.rol = rol;
+		this.certificadoDigital = certificadoDigital;
+		this.idCliente = idCliente;
 	}
+
 	public String getDni() {
 		return dni;
 	}
@@ -107,6 +125,24 @@ public class Trabajador {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+
+	public int getCertificadoDigital() {
+		return certificadoDigital;
+	}
+
+	public void setCertificadoDigital(int certificadoDigital) {
+		this.certificadoDigital = certificadoDigital;
+	}
+
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+	
+	
 	
 	
 

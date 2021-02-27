@@ -18,6 +18,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	BCryptPasswordEncoder passwordEncoder;
 	
 	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+		.antMatchers("/documento/firmar").hasAnyRole("FIRMANTE")
+		.and()
+		.formLogin()		
+		.defaultSuccessUrl("/documento/cargar", true)
+		.permitAll()
+		.and()
+		.logout().clearAuthentication(true)
+		.logoutSuccessUrl("/login")
+		.permitAll()
+		.deleteCookies("JSESSIONID")
+	    .invalidateHttpSession(true);
+	}
+	
+	
+	
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception{
 		
