@@ -45,6 +45,7 @@ public class DocumentoController {
 		
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();
 		Trabajador usuario =  trabajadorService.buscarTrabajadorUsuario(userDetails.getUsername());		
+		String nombreCompleto = usuario.getNombres()+' '+usuario.getApellidos();
 		
 		Documento documento = new Documento();
 		List<Documento> listadoDocumentos = documentoService.listarDocumentoTrabajador(usuario.getDni());
@@ -52,21 +53,24 @@ public class DocumentoController {
 		model.addAttribute("documento", documento);
 		model.addAttribute("listadoDocumentos", listadoDocumentos);
 		model.addAttribute("listadoFirmante", listadoFirmante);
+		model.addAttribute("nombreCompleto", nombreCompleto);
 		return "cargar-documento";
 	}
 	
 	@PostMapping("/cargar")
 	public String grabarDocumento(@Valid @ModelAttribute("documento")Documento d,BindingResult result,RedirectAttributes redirect,Model model,
-			@RequestParam("file") MultipartFile pdf,Authentication auth) throws Exception{
+			@RequestParam("file") MultipartFile pdf,Authentication auth) throws Exception{		
 		
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();
 		Trabajador usuario =  trabajadorService.buscarTrabajadorUsuario(userDetails.getUsername());
+		String nombreCompleto = usuario.getNombres()+' '+usuario.getApellidos();
 		
 		if(result.hasErrors()) {
 			List<Documento> listadoDocumentos = documentoService.listarDocumentoTrabajador(usuario.getDni());
-			List<Trabajador> listadoFirmante = trabajadorService.listarTrabajadorRol(1);
+			List<Trabajador> listadoFirmante = trabajadorService.listarTrabajadorRol(1);			
 			model.addAttribute("listadoDocumentos", listadoDocumentos);
 			model.addAttribute("listadoFirmante", listadoFirmante);
+			model.addAttribute("nombreCompleto", nombreCompleto);
 			return "cargar-documento";
 		}
 		
@@ -107,9 +111,12 @@ public class DocumentoController {
 		
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();
 		Trabajador usuario =  trabajadorService.buscarTrabajadorUsuario(userDetails.getUsername());
+		String nombreCompleto = usuario.getNombres()+' '+usuario.getApellidos();
+		
 		
 		List<Documento> listadoDocumentos = documentoService.listarDocumentoFirmante(usuario.getDni());		
-		model.addAttribute("listadoDocumentos", listadoDocumentos);		
+		model.addAttribute("listadoDocumentos", listadoDocumentos);	
+		model.addAttribute("nombreCompleto", nombreCompleto);
 		return "firmar-documento";
 	}
 	
@@ -161,16 +168,28 @@ public class DocumentoController {
 		}		
 	}
 	
-	@GetMapping("/generar/{id}")
-	public String generarFirmar(@PathVariable("id") int id,RedirectAttributes redirect) {
+	@PostMapping(value="/generar")
+	public String generarFirmar(@RequestParam(name="id") int id,RedirectAttributes redirect) {
 		
 		Documento documento = documentoService.buscarDocumento(id);
 		// ver manera de cambiar nombre DOCUMENTO FIRMADO
 		String rutaDoc = documento.getDocumentoCargado();		
-		documentoService.actualizarDocumentoFirmado(rutaDoc, id);
+		
+		Path directorioRecursos = Paths.get("src//main//resources//static/uploads/firma");
+		String rootPath = directorioRecursos.toFile().getAbsolutePath();
+		try {
+			byte[] bytes = rutaDoc.getBytes();
+			Path rutaCompleta = Paths.get(rootPath + "//"+rutaDoc);
+			Files.write(rutaCompleta,bytes);	
+			documentoService.actualizarDocumentoFirmado(rutaDoc, documento.getId());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		
 		redirect.addFlashAttribute("success", "Documento firmado");
 		return "redirect:/documento/firmar";
 	}
+	
+	
 }
 

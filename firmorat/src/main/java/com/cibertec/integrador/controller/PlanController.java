@@ -18,13 +18,16 @@ public class PlanController {
 	
 	@GetMapping("/comprar")
 	public String comprarPlanes(Model model) {
-		Plan plan_1 = planService.buscarPlan(1);
-		Plan plan_2 = planService.buscarPlan(2);
-		Plan plan_3 = planService.buscarPlan(3);
+		Plan plan_1 = planService.buscarPlan(3);		
 		
-		model.addAttribute("plan1", plan_1);
-		model.addAttribute("plan2", plan_2);
-		model.addAttribute("plan3", plan_3);		
+		String descripcion = plan_1.getDescripcion();
+		int cantidad = plan_1.getCantidad();
+		double precio = plan_1.getPrecio();
+		
+		model.addAttribute("plan1", plan_1);		
+		model.addAttribute("desc", descripcion);
+		model.addAttribute("cant", cantidad);
+		model.addAttribute("pre", precio);
 		
 		
 		return "comprar-planes";

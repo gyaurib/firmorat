@@ -57,8 +57,7 @@ public class Documento {
 	
 	@PrePersist
 	public void prePersist() throws Exception {		
-		fechaCarga = new Date();
-		
+		fechaCarga = new Date();	
     }
 	
 	public Documento() {	

@@ -13,6 +13,37 @@
 </head>
 <body>
 
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" 
+            data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">FIRMORAT</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">      
+        <li class="active"><a th:href="@{/documento/cargar}"> <span class="sr-only">(current)</span>Cargar Documento</a></li>
+        <li><a th:href="@{/documento/firmar}">Firmar Documento</a></li>
+        
+      
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a th:text="${nombreCompleto}">""</a></li>        
+      </ul>
+      
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
 	<div th:if="${success != null}" th:text="${success}"
 		class="alert alert-success" role="alert"></div>
 	<div th:if="${error != null}" th:text="${error}"
@@ -29,7 +60,7 @@
 				
 					<form th:object="${documento}" th:action="@{/documento/cargar}" method="post"
 						enctype="multipart/form-data">
-
+					
 						<div style="text-align: center;">
 							<span style="font-size: 13px;" class="label label-primary">Nombre</span> <input style="width:200px;font-size: 13px;"
 								type="text" th:field="*{nombre}" maxlength="45" th:errorclass="alert-danger">

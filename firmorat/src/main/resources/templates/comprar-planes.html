@@ -12,47 +12,25 @@
 </head>
 <body>
 <br>
-<div style="width:800px; text-align:center; margin :0;display:inline;">
+<div style="width:800px;">
 <div class="card-deck">
   <div class="card">    
     <div class="card-body">
+    
     <form>
-    	<input type="hidden">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a longer card.</p>
-      <p class="card-text">Cantidad Firmas</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    	<input type="hidden"/>    	
+    <div>
+    <h5 th:text="${desc}"></h5>  
+    <br>
+    <h4 th:text="${cant}"></h4>
+    <br>
+    <h3 th:text="${pre}"></h3>
+    </div>      
       <input class="btn btn-primary btn-sm" type="submit" value="Comprar">
       <br>
     </form>
-    </div>
-    
-  </div>
-  <div class="card">    
-    <div class="card-body">
-    <form>
-    <input type="hidden">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a longer card.</p>
-      <p class="card-text">Cantidad Firmas</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      <input class="btn btn-primary btn-sm" type="submit" value="Comprar">
-      <br>      
-      </form>
-    </div>
-  </div>
-  <div class="card">    
-    <div class="card-body">
-    <form>
-    	<input type="hidden">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a longer card.</p>
-      <p class="card-text">Cantidad Firmas</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      <input class="btn btn-primary btn-sm" type="submit" value="Comprar">      
-      </form>
-    </div>
-  </div>
+    </div>    
+  </div>  
 </div>
 </div>
 </body>
